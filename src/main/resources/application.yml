@@ -1,0 +1,21 @@
+server:
+    port: 5000
+    version: 1.0
+    servlet:
+        context-path: /api/v${server.version}
+spring:
+    jackson:
+        default-property-inclusion: NON_NULL
+    security:
+        jwtSecret: ghsghj1452
+        jwtExpirationMs: 1800000
+    datasource:
+        username: root
+        password: 12345678
+        url: jdbc:mysql://enrich.chyzucb9t7oi.ap-southeast-1.rds.amazonaws.com:3306/enrich
+    jpa:
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.MySQL8Dialect
+        hibernate:
+            ddl-auto: none
