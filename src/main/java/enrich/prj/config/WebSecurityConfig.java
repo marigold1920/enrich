@@ -1,6 +1,5 @@
 package enrich.prj.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,14 +19,20 @@ import enrich.prj.service.UserDetailsServiceImpl;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    @Autowired
-    private UserDetailsServiceImpl userDetailsServiceImpl;
-    @Autowired
-    private AuthEntryPointJwt authEntryPointJwt;
+    private final UserDetailsServiceImpl userDetailsServiceImpl;
+    private final AuthEntryPointJwt authEntryPointJwt;
+    private final JwtUtil jwtUtil;
+
+    public WebSecurityConfig(UserDetailsServiceImpl userDetailsServiceImpl, AuthEntryPointJwt authEntryPointJwt,
+            JwtUtil jwtUtil) {
+        this.userDetailsServiceImpl = userDetailsServiceImpl;
+        this.authEntryPointJwt = authEntryPointJwt;
+        this.jwtUtil = jwtUtil;
+    }
 
     @Bean
     public AuthTokenFilter authenticationJwtTokenFilter() {
-        return new AuthTokenFilter();
+        return new AuthTokenFilter(jwtUtil, userDetailsServiceImpl);
     }
 
     @Bean

@@ -1,4 +1,4 @@
-package enrich.prj.model;
+package enrich.prj.entity;
 
 import java.io.Serializable;
 
@@ -39,5 +39,5 @@ public class User implements Serializable {
     private String displayName;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Role role;
+    private Role role = new Role("ROLE_USER", "ROLE_USER");
 }

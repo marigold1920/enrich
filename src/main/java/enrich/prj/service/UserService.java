@@ -12,26 +12,22 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import enrich.prj.config.JwtUtil;
-import enrich.prj.dto.response.JwtResponse;
-import enrich.prj.dto.response.MessageResponse;
-import enrich.prj.model.AuthenticatedUserDetails;
-import enrich.prj.model.Role;
-import enrich.prj.model.User;
-import enrich.prj.repository.RoleRepository;
+import enrich.prj.entity.AuthenticatedUserDetails;
+import enrich.prj.entity.User;
+import enrich.prj.model.response.JwtResponse;
+import enrich.prj.model.response.MessageResponse;
 import enrich.prj.repository.UserRepository;
 
 @Service
-public class UserService {
+public class UserService implements IUserService {
     private final AuthenticationManager authenticationManager;
-    private final RoleRepository roleRepository;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
 
-    public UserService(AuthenticationManager authenticationManager, RoleRepository roleRepository,
-            UserRepository userRepository, PasswordEncoder passwordEncoder, JwtUtil jwtUtil) {
+    public UserService(AuthenticationManager authenticationManager, UserRepository userRepository,
+            PasswordEncoder passwordEncoder, JwtUtil jwtUtil) {
         this.authenticationManager = authenticationManager;
-        this.roleRepository = roleRepository;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtUtil = jwtUtil;
@@ -48,15 +44,12 @@ public class UserService {
     }
 
     public ResponseEntity<?> saveUser(User userSignUp) {
-        Role role = roleRepository.findById("ROLE_USER")
-                .orElseThrow(() -> new RuntimeException("ROLE_USER was not found!"));
         Optional<User> user = userRepository.findByUsername(userSignUp.getUsername());
 
         if (user.isPresent()) {
             return ResponseEntity.badRequest().body(new MessageResponse<>(400, "Username is existed!"));
         }
 
-        userSignUp.setRole(role);
         userSignUp.setPassword(passwordEncoder.encode(userSignUp.getPassword()));
         userRepository.saveAndFlush(userSignUp);
 

@@ -8,13 +8,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import enrich.prj.model.User;
+import enrich.prj.entity.User;
+import enrich.prj.service.IUserService;
 import enrich.prj.service.UserService;
 
 @RestController
 @RequestMapping("/users")
 public class UserController {
-    private final UserService userService;
+    private final IUserService userService;
 
     public UserController(UserService userService) {
         this.userService = userService;

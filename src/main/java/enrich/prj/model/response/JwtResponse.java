@@ -1,4 +1,4 @@
-package enrich.prj.dto.response;
+package enrich.prj.model.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

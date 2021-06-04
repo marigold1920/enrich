@@ -1,4 +1,4 @@
-package enrich.prj.model;
+package enrich.prj.entity;
 
 import java.util.Collection;
 import java.util.Collections;

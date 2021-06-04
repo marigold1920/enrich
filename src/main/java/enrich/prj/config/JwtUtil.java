@@ -2,19 +2,19 @@ package enrich.prj.config;
 
 import java.util.Date;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
-import enrich.prj.model.AuthenticatedUserDetails;
+import enrich.prj.entity.AuthenticatedUserDetails;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 @Component
 public class JwtUtil {
-    private static final Logger LOGGER = LoggerFactory.getLogger(JwtUtil.class);
+    private static final Logger LOGGER = LogManager.getLogger(JwtUtil.class);
 
     @Value("${spring.security.jwtSecret}")
     private String jwtSecret;
