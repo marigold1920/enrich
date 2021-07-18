@@ -4,8 +4,6 @@ server:
     servlet:
         context-path: /api/v${server.version}
 spring:
-    jackson:
-        default-property-inclusion: NON_NULL
     security:
         jwtSecret: ghsghj1452
         jwtExpirationMs: 1800000
