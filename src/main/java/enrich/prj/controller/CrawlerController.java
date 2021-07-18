@@ -18,7 +18,7 @@ public class CrawlerController {
     }
 
     @GetMapping
-    public void crawle() throws IOException, InterruptedException {
+    public void crawl() throws IOException, InterruptedException {
         crawlerService.crawl();
     }
 }

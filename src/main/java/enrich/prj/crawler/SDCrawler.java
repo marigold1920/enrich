@@ -1,5 +1,8 @@
 package enrich.prj.crawler;
 
+import enrich.prj.entity.Product;
+import org.jsoup.Jsoup;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -7,10 +10,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-
-import org.jsoup.Jsoup;
-
-import enrich.prj.entity.Product;
 
 public final class SDCrawler extends ICrawler {
     Collection<Product> fetchPage() throws IOException, InterruptedException {
@@ -26,9 +25,8 @@ public final class SDCrawler extends ICrawler {
         return products;
     }
 
-    Product fetchDetails(String link) throws IOException {
+    Product fetchDetails(String link) {
         try {
-            System.out.println(link);
             var expressions = page.getMapExpressions();
             var document = Jsoup.connect(link).get();
             var details = document.selectFirst(expressions.get("productDetails").getExpression());
@@ -41,7 +39,7 @@ public final class SDCrawler extends ICrawler {
             var ram = Short.parseShort(document.selectFirst("div.parameter:matches(\\d+(.)*GB)").text().replaceAll("\\D+", ""));
             var rom = Short.parseShort(details.selectFirst(expressions.get("rom").getExpression()).text().replaceAll("\\D+", ""));
             var colors = details.select(expressions.get("colors").getExpression()).eachAttr("style").stream()
-                    .map(SDCrawler::getColorFromCssStyle).collect(Collectors.toList());
+                .map(SDCrawler::getColorFromCssStyle).collect(Collectors.toList());
 
             return new Product(null, link, name, image, price, ram, rom, colors, promotions, page.getDomain());
         } catch (Exception error) {

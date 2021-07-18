@@ -30,7 +30,7 @@ public class AttributeExpression implements Serializable {
     @Column(name = "attribute", length = 20)
     private String attribute;
 
-    @Column(name = "expression", length = 50)
+    @Column(name = "expression", length = 70)
     private String expression;
 
     @ManyToOne(fetch = FetchType.EAGER)

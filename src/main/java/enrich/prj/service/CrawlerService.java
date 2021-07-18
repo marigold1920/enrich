@@ -26,13 +26,9 @@ public class CrawlerService implements ICrawlerService {
     public void crawl() throws IOException, InterruptedException {
         Collection<Page> pages = pageRepository.findAll();
         Creator creator = new CrawlerCreator();
-        ICrawler crawler;
 
         for (Page page : pages) {
-            crawler = creator.createCrawler(page.getDomain().getMarker());
-
-            crawler.setPage(page);
-            crawler.execute(productRepository);
+            creator.start(productRepository, page);
         }
     }
 }

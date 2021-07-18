@@ -18,7 +18,7 @@ public abstract class ICrawler {
 
     abstract Collection<Product> fetchPage() throws IOException, InterruptedException;
 
-    abstract Product fetchDetails(String url) throws IOException;
+    abstract Product fetchDetails(String url);
 
     public final <T extends JpaRepository<Product, ?>> void execute(T repository) throws IOException, InterruptedException {
         var products = fetchPage().stream()

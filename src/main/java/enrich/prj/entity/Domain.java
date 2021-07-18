@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -27,8 +28,8 @@ public class Domain implements Serializable {
     @GeneratedValue(generator = "generator")
     private Integer id;
 
-    @Column(name = "page_name", length = 30)
-    private String pageName;
+    @Column(name = "name", length = 30)
+    private String name;
 
     @Column(name = "base_url", length = 100)
     private String baseUrl;
@@ -39,9 +40,9 @@ public class Domain implements Serializable {
     @Enumerated(EnumType.STRING)
     private PageMarker marker;
 
-    @OneToMany(mappedBy = "domain", orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "domain", orphanRemoval = true)
     private Collection<Page> pages;
 
-    @OneToMany(mappedBy = "domain")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "domain")
     private Collection<Product> products;
 }
